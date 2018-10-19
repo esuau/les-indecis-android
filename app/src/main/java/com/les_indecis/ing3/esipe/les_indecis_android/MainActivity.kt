@@ -21,13 +21,10 @@ class MainActivity : AppCompatActivity() {
 
         doAsync {
             result = URL("https://ghibliapi.herokuapp.com/films").readText()
-
-    //        result = URL("https://ghibliapi.herokuapp.com/films").readText()
             uiThread {
                 Log.d("Request", result)
                 longToast("Request performed")
                 val textView: TextView = findViewById(R.id.content) as TextView
-                result = URL("https://ghibliapi.herokuapp.com/films").readText()
                 textView.setText(result)
             }
 

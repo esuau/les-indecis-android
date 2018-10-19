@@ -255,6 +255,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             } catch (e: InterruptedException) {
                 return false
             }
+            /*
             var result : String = ""
             result = URL("http://0.0.0.0/login?login='"+mEmail+"'&mdp='"+mPassword+"'").readText()
             val jsonObj = JSONObject(result)
@@ -263,7 +264,8 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             {
                 return true;
             }
-            /*
+            return false;
+            */
             return DUMMY_CREDENTIALS
                     .map { it.split(":") }
                     .firstOrNull { it[0] == mEmail }
@@ -272,8 +274,8 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
                         it[1] == mPassword
                     }
                     ?: true
-            */
-            return false;
+
+
         }
 
         override fun onPostExecute(success: Boolean?) {
