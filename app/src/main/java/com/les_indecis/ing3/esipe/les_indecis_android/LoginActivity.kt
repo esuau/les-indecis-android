@@ -25,7 +25,14 @@ import java.util.ArrayList
 import android.Manifest.permission.READ_CONTACTS
 import android.util.Log
 
+import org.jetbrains.anko.uiThread
 import kotlinx.android.synthetic.main.activity_login.*
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.WebSocket;
+import okhttp3.WebSocketListener;
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.uiThread
@@ -40,6 +47,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
      * Keep track of the login task to ensure we can cancel it if requested.
      */
     private var mAuthTask: UserLoginTask? = null
+    var token= ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -149,7 +157,8 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
     private fun isEmailValid(email: String): Boolean {
         //TODO: Replace this with your own logic
-        return email.contains("@")
+       // return email.contains("@")
+        return true;
     }
 
     private fun isPasswordValid(password: String): Boolean {
@@ -248,24 +257,29 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
     inner class UserLoginTask internal constructor(private val mEmail: String, private val mPassword: String, private val Activity: LoginActivity) : AsyncTask<Void, Void, Boolean>() {
         override fun doInBackground(vararg params: Void): Boolean? {
             // TODO: attempt authentication against a network service.
+            var URL:String="http://api.undefined.inside.esiag.info/connect"
+            var body = mapOf("pseudo" to mEmail, "passwd" to mPassword)
+            var response = khttp.post(
+                    url = URL,
+                    data = body)
 
-            try {
-                // Simulate network access.
-                Thread.sleep(2000)
-            } catch (e: InterruptedException) {
-                return false
-            }
-            /*
-            var result : String = ""
-            result = URL("http://0.0.0.0/login?login='"+mEmail+"'&mdp='"+mPassword+"'").readText()
-            val jsonObj = JSONObject(result)
-            val status = jsonObj.getString("status")
-            if (status.equals("connected"))
+
+            val resp_body = response.text
+            if (resp_body.startsWith("authentication_success"))
             {
+                token=resp_body.split(":").get(1)
+                val request:Request
+                request = Request.Builder().url("ws://api.undefined.inside.esiag.info:6666").build()
+                val listener:WebSocketListener =NotifWSListener()
+                val ws: WebSocket
+                val client:OkHttpClient = OkHttpClient()
+                ws = client.newWebSocket(request, listener)
+                ws.send("message")
                 return true;
+
             }
             return false;
-            */
+            /*
             return DUMMY_CREDENTIALS
                     .map { it.split(":") }
                     .firstOrNull { it[0] == mEmail }
@@ -274,7 +288,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
                         it[1] == mPassword
                     }
                     ?: true
-
+             */
 
         }
 
