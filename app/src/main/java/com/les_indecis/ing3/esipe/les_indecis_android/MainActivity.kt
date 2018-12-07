@@ -26,9 +26,10 @@ class MainActivity : AppCompatActivity() {
             var response = khttp.post(
             url = URL,
             data = body)
-
-            val textView: TextView = findViewById(R.id.content) as TextView
-            textView.setText("Message envoyé")
+            uiThread {
+                val textView: TextView = findViewById(R.id.content) as TextView
+                textView.setText(response.text)
+            }
         }
 
         /*

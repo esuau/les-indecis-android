@@ -16,7 +16,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Envoi de message dans rabbitMQ... "
+        android:text=""
         tools:layout_editor_absoluteX="45dp"
         tools:layout_editor_absoluteY="66dp" />
 
@@ -24,7 +24,7 @@
         android:id="@+id/content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="Envoi de message dans rabbitMQ... "
         tools:layout_editor_absoluteX="45dp"
         tools:layout_editor_absoluteY="66dp" />
 
