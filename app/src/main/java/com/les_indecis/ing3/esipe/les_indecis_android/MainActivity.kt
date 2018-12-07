@@ -11,24 +11,38 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.uiThread
 import java.net.URL
-
+import khttp.*
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         var result:String=""
+        var URL:String="http://api.undefined.inside.esiag.info/add_msg"
+        var body = mapOf("queue" to "test", "msg" to "message from android")
+        //post(URL+"/add_msg", body)
 
         doAsync {
-            result = URL("https://ghibliapi.herokuapp.com/films").readText()
+            var response = khttp.post(
+            url = URL,
+            data = body)
+
+            val textView: TextView = findViewById(R.id.content) as TextView
+            textView.setText("Message envoyé")
+        }
+
+        /*
+        doAsync {
+            result = URL(URL).readText()
             uiThread {
                 Log.d("Request", result)
                 longToast("Request performed")
                 val textView: TextView = findViewById(R.id.content) as TextView
                 textView.setText(result)
             }
-
         }
+        */
+
 
 
 
