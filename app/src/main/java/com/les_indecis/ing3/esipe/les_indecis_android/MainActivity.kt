@@ -5,6 +5,7 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.TextView
 import com.les_indecis.ing3.esipe.les_indecis_android.R.id.async
 import org.jetbrains.anko.doAsync
@@ -32,6 +33,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        val buttonParkingSpots: Button = findViewById(R.id.parking_spots_button) as Button
+        buttonParkingSpots.setOnClickListener {
+            val intent = Intent(this,MapActivity::class.java)
+            startActivity(intent)
+        }
         /*
         doAsync {
             result = URL(URL).readText()
