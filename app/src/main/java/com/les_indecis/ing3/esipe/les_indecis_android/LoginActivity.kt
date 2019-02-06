@@ -269,7 +269,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             {
                 token=resp_body.split(":").get(1)
                 val request:Request
-                request = Request.Builder().url("ws://api.undefined.inside.esiag.info:6666").build()
+                request = Request.Builder().url("ws://api.undefined.inside.esiag.info:9091").build()
                 val listener:WebSocketListener =NotifWSListener()
                 val ws: WebSocket
                 val client:OkHttpClient = OkHttpClient()
