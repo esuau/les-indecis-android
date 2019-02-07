@@ -157,7 +157,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
     private fun isEmailValid(email: String): Boolean {
         //TODO: Replace this with your own logic
-       // return email.contains("@")
+        // return email.contains("@")
         return true;
     }
 
@@ -268,14 +268,6 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             if (resp_body.startsWith("authentication_success"))
             {
                 token=resp_body.split(":").get(1)
-                val request:Request
-                request = Request.Builder().url("ws://api.undefined.inside.esiag.info:9091").build()
-                val listener:WebSocketListener =NotifWSListener()
-                val ws: WebSocket
-                val client:OkHttpClient = OkHttpClient()
-                ws = client.newWebSocket(request, listener)
-                ws.request()
-                ws.send("token:"+token)
                 return true;
             }
             return false;
@@ -287,6 +279,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
             if (success!!) {
                 val intent = MainActivity.newIntent(Activity)
+                intent.putExtra("token", token)
                 startActivity(intent)
             } else {
                 password.error = getString(R.string.error_incorrect_password)
