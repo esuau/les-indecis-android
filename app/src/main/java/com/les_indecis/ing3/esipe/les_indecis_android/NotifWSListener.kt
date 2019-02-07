@@ -10,18 +10,18 @@ import okhttp3.WebSocket
 
 class NotifWSListener : WebSocketListener() {
     override fun onOpen(webSocket: WebSocket, response: Response) {
-        webSocket.send("message")
+        /*webSocket.send("message")
         webSocket.send("Hello, it's SSaurel !")
         webSocket.send("What's up ?")
         webSocket.send(ByteString.decodeHex("deadbeef"))
-        webSocket.close(NORMAL_CLOSURE_STATUS, "Goodbye !")
-    }
-/*
-    override fun onMessage(webSocket: WebSocket, text: String) {
-        ("Receiving : $text")
+        webSocket.close(NORMAL_CLOSURE_STATUS, "Goodbye !")*/
     }
 
-    override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
+    override fun onMessage(webSocket: WebSocket, text: String) {
+        webSocket.send("Receiving on android : "+ text)
+    }
+
+/*    override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
         output("Receiving bytes : " + bytes.hex())
     }
 

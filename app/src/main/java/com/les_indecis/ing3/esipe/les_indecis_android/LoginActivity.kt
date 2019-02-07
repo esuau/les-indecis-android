@@ -269,27 +269,16 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             {
                 token=resp_body.split(":").get(1)
                 val request:Request
-                request = Request.Builder().url("ws://api.undefined.inside.esiag.info:6666").build()
+                request = Request.Builder().url("ws://api.undefined.inside.esiag.info:9091").build()
                 val listener:WebSocketListener =NotifWSListener()
                 val ws: WebSocket
                 val client:OkHttpClient = OkHttpClient()
                 ws = client.newWebSocket(request, listener)
-                ws.send("message")
+                ws.request()
+                ws.send("token:"+token)
                 return true;
-
             }
             return false;
-            /*
-            return DUMMY_CREDENTIALS
-                    .map { it.split(":") }
-                    .firstOrNull { it[0] == mEmail }
-                    ?.let {
-                        // Account exists, return true if the password matches.
-                        it[1] == mPassword
-                    }
-                    ?: true
-             */
-
         }
 
         override fun onPostExecute(success: Boolean?) {
