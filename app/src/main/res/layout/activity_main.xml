@@ -28,14 +28,20 @@
         tools:layout_editor_absoluteX="45dp"
         tools:layout_editor_absoluteY="66dp" />
 
+
         <TextView
             android:id="@+id/output"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/start"
             android:layout_centerHorizontal="true"
             android:textSize="16sp"
             android:layout_marginTop="30dp"/>
+
+        <Button
+            android:id="@+id/parking_spots_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GET SPOTS"/>
 
     </LinearLayout>
 

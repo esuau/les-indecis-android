@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.view.View
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import okhttp3.OkHttpClient
@@ -65,13 +65,14 @@ class MainActivity : AppCompatActivity() {
             uiThread {
                 val textView: TextView = findViewById(R.id.content) as TextView
                 textView.setText(response.text)
-                start()
+                start()}}
 
-            }
+
+        val buttonParkingSpots: Button = findViewById(R.id.parking_spots_button) as Button
+        buttonParkingSpots.setOnClickListener {
+            val intent = Intent(this,MapActivity::class.java)
+            startActivity(intent)
         }
-
-
-
     }
 
     private fun start() {
@@ -81,8 +82,6 @@ class MainActivity : AppCompatActivity() {
             val listener = EchoWebSocketListener("token:" + token)
             val ws = client!!.newWebSocket(request, listener)
             ws.request()
-
-//        client!!.dispatcher().executorService().shutdown()
     }
 
     private fun output(txt: String) {
