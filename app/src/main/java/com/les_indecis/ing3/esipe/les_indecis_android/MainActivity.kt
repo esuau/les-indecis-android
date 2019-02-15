@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity() {
 
             val request = Request.Builder().url("ws://api.undefined.inside.esiag.info:9091").build()
             val token = intent.getStringExtra("token")
-            val listener = EchoWebSocketListener(token)
+            val listener = EchoWebSocketListener("token:" + token)
             val ws = client!!.newWebSocket(request, listener)
             ws.request()
 
