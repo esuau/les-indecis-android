@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
@@ -17,6 +18,13 @@ import okio.ByteString
 import com.les_indecis.ing3.esipe.les_indecis_android.R.layout.activity_main
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.ValueEventListener
+import org.jetbrains.anko.toast
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,6 +39,7 @@ class MainActivity : AppCompatActivity() {
 
         override fun onMessage(webSocket: WebSocket?, text: String?) {
             output("Receiving : " + text!!)
+
         }
 
         override fun onMessage(webSocket: WebSocket?, bytes: ByteString) {
@@ -69,9 +78,15 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
+        Thread.sleep(1000)
+        toast(FirebaseMessagingService.lastMessage)
 
 
+    }
 
+    public fun showMsg(msg : String)
+    {
+        toast(msg);
     }
 
     private fun start() {
