@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
@@ -17,6 +18,13 @@ import okio.ByteString
 import com.les_indecis.ing3.esipe.les_indecis_android.R.layout.activity_main
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.ValueEventListener
+import org.jetbrains.anko.toast
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,6 +39,7 @@ class MainActivity : AppCompatActivity() {
 
         override fun onMessage(webSocket: WebSocket?, text: String?) {
             output("Receiving : " + text!!)
+
         }
 
         override fun onMessage(webSocket: WebSocket?, bytes: ByteString) {
@@ -54,8 +63,8 @@ class MainActivity : AppCompatActivity() {
         output = findViewById(R.id.output) as TextView
         client = OkHttpClient()
 
-        var result:String=""
-        var URL:String="http://api.undefined.inside.esiag.info/add_msg"
+        var result: String = ""
+        var URL: String = "http://api.undefined.inside.esiag.info/add_msg"
         var body = mapOf("queue" to "test", "msg" to "message from android")
 
         doAsync {
@@ -65,15 +74,21 @@ class MainActivity : AppCompatActivity() {
             uiThread {
                 val textView: TextView = findViewById(R.id.content) as TextView
                 textView.setText(response.text)
-                start()}}
-
-
-        val buttonParkingSpots: Button = findViewById(R.id.parking_spots_button) as Button
-        buttonParkingSpots.setOnClickListener {
-            val intent = Intent(this,MapActivity::class.java)
-            startActivity(intent)
+                start()
+            }
         }
+
+        Thread.sleep(1000)
+        toast(FirebaseMessagingService.lastMessage)
+
+
+    val buttonParkingSpots: Button = findViewById(R.id.parking_spots_button) as Button
+    buttonParkingSpots.setOnClickListener {
+        val intent = Intent(this, MapActivity::class.java)
+        startActivity(intent)
     }
+}
+
 
     private fun start() {
 

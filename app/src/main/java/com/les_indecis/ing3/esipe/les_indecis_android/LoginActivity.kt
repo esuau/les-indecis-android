@@ -259,12 +259,14 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             // TODO: attempt authentication against a network service.
             var URL:String="http://api.undefined.inside.esiag.info/connect"
             var body = mapOf("pseudo" to mEmail, "passwd" to mPassword)
+
             var response = khttp.post(
                     url = URL,
                     data = body)
 
 
             val resp_body = response.text
+
             if (resp_body.startsWith("authentication_success"))
             {
                 token=resp_body.split(":").get(1)
